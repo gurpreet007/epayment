@@ -84,7 +84,7 @@ public partial class upload : System.Web.UI.Page
             }
 
             //check the field length for every record 
-            //to avoid crash if sbm m/c malfunctions
+            //to avoid crash if sbm machine malfunctions
             if (fields.Length != Check_NumFields)
             {
                 //if its first line then exit
