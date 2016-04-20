@@ -1,0 +1,229 @@
+@pageBackColor: LightBlue; //AD D8 E6
+@pageFontColor: DarkSlateBlue;
+@pageFooterBackColor: White;//Silver
+@pageFooterFontColor: #666;
+@pageLoginInfoBackColor: PowderBlue;
+@navSelectedBackColor: SkyBlue;
+@buttonClickedColor:#6aa4ab;
+@impMsgColor: Red;
+html, body {
+	margin: 0;
+	padding: 0;
+	font-size: large;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+}
+.login {
+    h3& {
+        text-align: center;
+        margin: 20px;
+        font-weight: normal;
+        font-size: xx-large;
+        color: @pageFontColor;
+        height: 80px;
+        white-space:nowrap;
+    }
+	h2& {
+        text-align: center;
+		margin-top:100px;
+		margin-bottom:-30px;
+        font-weight: bold;
+        font-size: large;
+        color: @impMsgColor;
+        white-space:nowrap;
+    }
+    header& {
+        padding: 10px 10px 60px 10px;
+        font-size: xx-large;
+    }
+
+    img& {
+        vertical-align: middle;
+    }
+
+    form& {
+        position: relative;
+        background-color: @pageBackColor;
+        color: @pageFontColor;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+        width: 400px;
+        height: 300px;
+        top: 70px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 3px 3px 5px 2px #aaa;
+    }
+
+    input[type="submit"]& {
+        margin-top: 35px;
+        Background-color:@pageLoginInfoBackColor;
+	    color: @pageFontColor;
+        border:0px;
+        &:active {
+            Background-color: @buttonClickedColor;
+            box-shadow: none;
+        }
+        &:hover {
+            cursor:pointer;
+        }
+    }
+}
+.sectionHeader
+{
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+	font-size: x-large;
+	color:@pageFontColor;
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+header.page{
+	width:100%;
+	background-color: @pageBackColor;
+	color:	@pageFontColor;
+	height: 60px;
+	text-align: center;
+	line-height: 1.5em;
+	padding: 10px 0px 10px 0px;
+	font-size:x-large;
+}
+.support{
+	a {
+        color: @pageFooterFontColor;
+        /*text-decoration: none;*/
+    }
+	font-size: medium;
+}
+.pageFooter {
+    footer& {
+        background-color: @pageFooterBackColor;
+        position: absolute;
+        width: 100%;
+        height: 35px;
+        bottom: 0;
+        text-align: center;
+        font-size: small;
+        color: @pageFooterFontColor;
+    }
+
+    a& {
+        color: @pageFooterFontColor;
+        /*text-decoration: none;*/
+    }
+}
+input[type="text"], input[type="password"] {
+	width: 150px;
+	height: 1.5em;
+	font-size: large;
+	margin: 4px;
+	border-radius: 5px;
+}
+input[type="button"],
+input[type="submit"] {
+	width: 150px;
+	height: 40px;
+	border-radius: 10px;
+	font-size: large;
+	box-shadow: 3px 3px 5px 2px #aaa;
+	background-color: inherit;
+	margin-top: 0px;
+	Background-color:@pageLoginInfoBackColor;
+	color: @pageFontColor;
+    border:0px;
+    &:active {
+        Background-color: @buttonClickedColor;
+        box-shadow: none;
+    }
+    &:hover {
+        cursor:pointer;
+    }
+}
+input[type="file"] 
+{
+    font-size: large;
+}
+select
+{
+    font-size: large;
+}
+.msg 
+{
+    display: block;
+    color: red;
+    margin: 0px 0px 0px 0px;
+}
+.hide
+{
+    display:none;
+}
+#loginInfo {
+	font-size: small;
+	text-align: right;
+	background-color: @pageLoginInfoBackColor;
+	Color: @pageFontColor;
+    padding-right: 10px;
+}
+nav {
+    background-color: @pageBackColor;
+    margin: 0;
+    width: 100%;
+    font-weight: bold;
+
+    ul {
+        margin: 0px;
+        list-style-type: none;
+        padding: 5px 0px 5px 20px;
+
+        li {
+            display: inline;
+            padding: 5px 20px 5px 20px;
+            a {
+                text-decoration:none;
+                padding: 0px;
+            }
+            a:link, a:visited {
+                color: @pageFontColor;
+                border-bottom: none;
+                font-weight: normal;
+                font-size: small;
+                font-weight: bold;
+            }
+
+            &:hover, &.selected {
+                background-color: @navSelectedBackColor;
+                font-weight: bold;
+            }
+        }
+    }
+}
+.tableWrapper {
+    display: table;
+    padding: 10px;
+    border: thin dotted #7e7e7e;
+    background-color: @pageBackColor;
+    color: @pageFontColor;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 10px;
+
+    div.tableRow {
+        display: table-row;
+
+        p {
+            display: table-cell;
+            vertical-align: top;
+            padding: 3px;
+            text-align: left;
+
+            &:first-child {
+               text-align: right; 
+            }
+            &.msg {
+                display: block;
+                color: @pageFontColor;
+                margin: 0px;
+            }
+        }
+    }
+}
