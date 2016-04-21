@@ -86,7 +86,7 @@ public partial class archive : System.Web.UI.Page
             return;
         }
 
-        sqlIns = string.Format("insert into ARCdBILL.ARC_{0}_{1} select * from {1} where {2}", year, tbl, sqlCond);
+        sqlIns = string.Format("insert into ARCBILL.ARC_{0}_{1} select * from {1} where {2}", year, tbl, sqlCond);
         sqlDel = string.Format("delete from {0} where {1}", tbl, sqlCond);
         sqlLog = string.Format("insert into ARCHIVEBILL_LOG values ('{0}','{1}', sysdate)", acno, userid);
         sql = string.Format("BEGIN {0}; {1}; {2}; END;", sqlIns, sqlDel, sqlLog);
