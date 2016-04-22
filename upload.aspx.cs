@@ -115,7 +115,7 @@ public partial class upload : System.Web.UI.Page
             sbsql.AppendFormat("INSERT INTO {0} VALUES (", categ.tableName);
 
             //trim the PK fields to remove any whitespace
-            fields[categ.posAccountNo] = fields[categ.posAccountNo].Trim();
+            fields[categ.posAccountNo] = fields[categ.posAccountNo].Trim().ToUpper();
             fields[categ.posBillCycle] = fields[categ.posBillCycle].Trim();
             fields[categ.posBillYear] = fields[categ.posBillYear].Trim();
 

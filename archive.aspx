@@ -48,7 +48,7 @@
             <p><asp:Label ID="lblMsg" class="msg" runat="server"></asp:Label></p>
         </div>
         <div class="tableRow">
-            <p></p>
+            <p><asp:HyperLink ID="lnkViewBill" runat="server" Target="_blank" Visible="False">View Bill</asp:HyperLink></p>
             <p><asp:Button ID="btnArchive" Text="Archive Bill" runat="server" onclientclick="$('#lblMsg').text('')" onclick="btnArchive_Click" Visible="False" /></p>
         </div>
     </form>

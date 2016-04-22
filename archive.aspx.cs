@@ -30,7 +30,7 @@ public partial class archive : System.Web.UI.Page
             lblMsg.Text = "Invalid Account Number";
             return;
         }
-        sql = String.Format("select cname, table_name, to_char(updatedt, 'dd-Mon-yyyy hh24:mi:ss') as dtup, if_sap from mast_account where account_no = '{0}'", acno);
+        sql = String.Format("select cname, table_name, to_char(updatedt, 'dd-Mon-yyyy hh24:mi:ss') as dtup, if_sap from mast_account where upper(account_no) = upper('{0}')", acno);
         ds = OraDBConnection.GetData(sql);
 
         if (ds.Tables[0].Rows.Count != 1)
@@ -48,6 +48,8 @@ public partial class archive : System.Web.UI.Page
         lblName.Text = ds.Tables[0].Rows[0]["cname"].ToString();
         lblCat.Text = ds.Tables[0].Rows[0]["table_name"].ToString().Split('.')[1].ToUpper();
         lblDtUpload.Text = ds.Tables[0].Rows[0]["dtup"].ToString();
+        lnkViewBill.NavigateUrl = "https://billpayment.pspcl.in/pgMaster.aspx?uc=Home&acno="+acno;
+        lnkViewBill.Visible = true;
         btnArchive.Visible = true;
     }
     protected void btnArchive_Click(object sender, EventArgs e)
@@ -76,7 +78,7 @@ public partial class archive : System.Web.UI.Page
             return;
         }
 
-        sqlCond = string.Format(" {0} = '{1}' and userid = '{2}' ", dict_acno[tbl], acno, userid);
+        sqlCond = string.Format(" upper({0}) = upper('{1}') and upper(userid) = upper('{2}') ", dict_acno[tbl], acno, userid);
         sql = string.Format("select count(*) from {0} where {1}", tbl, sqlCond);
         ds = OraDBConnection.GetData(sql);
 
