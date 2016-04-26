@@ -183,7 +183,7 @@ public partial class upload : System.Web.UI.Page
                         "(LINENO, ACCOUNTNO, BILLCYCLE, BILLYEAR, SESSIONID, DATED, TYPE, USERID, TBLNAME, QSQL) "+
                         "VALUES({0},'{1}','{2}','{3}','{4}',to_date('{5}','{6}'),'{7}','{8}','{9}','{10}')",
                         line + 1, common.strErrStyle, common.strErrStyle, common.strErrStyle, hidSID.Value,
-                        dtUpload, common.dtFmtOracle, common.strErrLetter, userID, categ.tableName.ToUpper().Trim(), sql_backup);
+                        dtUpload, common.dtFmtOracle, common.strErrLetter, userID, categ.tableName.ToUpper().Trim(), sql_backup.Replace("'", "$#$"));
                     //sbsql.AppendFormat("INSERT INTO ONLINEBILL.DUPBILL(LINENO, SESSIONID, DATED, TYPE) "+
                     //        "VALUES({0},'{1}',to_date('{2}','{3}'),'{4}')", line + 1, hidSID.Value, dtUpload, common.dtFmtOracle,"E");
                 }
