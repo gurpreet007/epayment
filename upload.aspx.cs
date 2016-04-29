@@ -57,7 +57,7 @@ public partial class upload : System.Web.UI.Page
         }
 
         //delete uploaded file
-        //System.IO.File.Delete(path);
+        System.IO.File.Delete(path);
 
         //if "AccountNo" word at line 0 then start from line 1 else start from line 0
         start = (lines[0].Split(categ.delimiter)[0] == "AccountNo") ? 1 : 0;
@@ -75,11 +75,11 @@ public partial class upload : System.Web.UI.Page
 
             /*Support modified DSABOVE (82) and DSBELOW (78) files 
              * along with old format 76 and 72 respectively */
-            if (fields.Length == 79)
+            if (fields.Length == 79 && categ.categName=="DSBELOW10KW")
             {
                 Check_NumFields = 79;
             }
-            else if (fields.Length == 83)
+            else if (fields.Length == 83 && categ.categName == "DSABOVE10KW")
             {
                 Check_NumFields = 83;
             }
@@ -144,7 +144,7 @@ public partial class upload : System.Web.UI.Page
 
             sbsql.AppendFormat(",'{0}', '{1}', to_date('{2}','{3}')); ", userID, '0', dtUpload, common.dtFmtOracle);
             sql_backup=string.Empty;
-            sql_backup = sbsql.ToString();
+            //sql_backup = sbsql.ToString().Replace("'", "$#$");
 
             //insert into oracle 
             //Composite Primary Key: ACCOUNTNO, BILLCYCLE, BILLYEAR
@@ -183,7 +183,7 @@ public partial class upload : System.Web.UI.Page
                         "(LINENO, ACCOUNTNO, BILLCYCLE, BILLYEAR, SESSIONID, DATED, TYPE, USERID, TBLNAME, QSQL) "+
                         "VALUES({0},'{1}','{2}','{3}','{4}',to_date('{5}','{6}'),'{7}','{8}','{9}','{10}')",
                         line + 1, common.strErrStyle, common.strErrStyle, common.strErrStyle, hidSID.Value,
-                        dtUpload, common.dtFmtOracle, common.strErrLetter, userID, categ.tableName.ToUpper().Trim(), sql_backup.Replace("'", "$#$"));
+                        dtUpload, common.dtFmtOracle, common.strErrLetter, userID, categ.tableName.ToUpper().Trim(), sql_backup);
                     //sbsql.AppendFormat("INSERT INTO ONLINEBILL.DUPBILL(LINENO, SESSIONID, DATED, TYPE) "+
                     //        "VALUES({0},'{1}',to_date('{2}','{3}'),'{4}')", line + 1, hidSID.Value, dtUpload, common.dtFmtOracle,"E");
                 }
