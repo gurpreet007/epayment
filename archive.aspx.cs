@@ -21,6 +21,13 @@ public partial class archive : System.Web.UI.Page
         string acno = txtAcno.Value;
         string sql = string.Empty;
         DataSet ds;
+        string userid = Session[common.strUserID].ToString();
+
+        if (userid != "CBCPTA")
+        {
+            lblMsg.Text = "Invalid Operation";
+            return;
+        }
 
         lblMsg.Text = string.Empty;
 
