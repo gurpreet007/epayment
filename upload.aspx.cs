@@ -73,15 +73,22 @@ public partial class upload : System.Web.UI.Page
 
             #region invalid_record_check
 
-            /*Support modified DSABOVE (82) and DSBELOW (78) files 
-             * along with old format 76 and 72 respectively */
-            if (fields.Length == 79 && categ.categName=="DSBELOW10KW")
+            /*Support for old formats*/
+            if (categ.categName=="DSBELOW10KW" && fields.Length == 72)
             {
-                Check_NumFields = 79;
+                Check_NumFields = 72;
             }
-            else if (fields.Length == 83 && categ.categName == "DSABOVE10KW")
+            else if (categ.categName == "DSABOVE10KW" && fields.Length == 76)
             {
-                Check_NumFields = 83;
+                Check_NumFields = 76;
+            }
+            else if (categ.categName == "MS" && fields.Length == 92)
+            {
+                Check_NumFields = 92;
+            }
+            else if (categ.categName == "SP" && fields.Length == 69)
+            {
+                Check_NumFields = 69;
             }
 
             //check the field length for every record 
@@ -134,14 +141,30 @@ public partial class upload : System.Web.UI.Page
             //add userID, empID and date_upload at last, we already have comma and space at the end of string
             //sbsql.AppendFormat("'{0}', '{1}', to_date('{2}','{3}'))", userID, empID, dtUpload, common.dtFmtOracle);
 
-            /*add empty values in the last fields of the tables if old 
-             * format of DSA and DSB is being used*/
-            if (Check_NumFields == 72 || Check_NumFields == 76)
-            //if (Check_NumFields == 72)
+            /*add empty values in the last fields of the tables if old formats are being used*/
+            //if (Check_NumFields == 72 || Check_NumFields == 76)
+            //{
+            //    sbsql.AppendFormat(",'','','','','','',''");
+            //}
+
+            /*add empty values in the last fields of the tables if old formats are being used*/
+            if (categ.categName == "DSBELOW10KW" && fields.Length == 72)
             {
                 sbsql.AppendFormat(",'','','','','','',''");
             }
-
+            else if (categ.categName == "DSABOVE10KW" && fields.Length == 76)
+            {
+                sbsql.AppendFormat(",'','','','','','',''");
+            }
+            else if (categ.categName == "MS" && fields.Length == 92)
+            {
+                sbsql.AppendFormat(",'','','','','','','','','','','','','',''");
+            }
+            else if (categ.categName == "SP" && fields.Length == 69)
+            {
+                sbsql.AppendFormat(",'','','','',''");
+            }
+            
             sbsql.AppendFormat(",'{0}', '{1}', to_date('{2}','{3}')); ", userID, '0', dtUpload, common.dtFmtOracle);
             sql_backup=string.Empty;
             //sql_backup = sbsql.ToString().Replace("'", "$#$");

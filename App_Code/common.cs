@@ -57,7 +57,7 @@ public class common
             public const int POS_BILLYEAR = 81;
             public const int POS_BILLCYCLE = 28;
             public const int POS_ACNO = 0;
-            public const int NUMCOLS = 92;
+            public const int NUMCOLS = 106; //also supporting old format 92 cols
         }
         public struct SP
         {
@@ -71,7 +71,7 @@ public class common
             public const int POS_BILLYEAR = 68;
             public const int POS_BILLCYCLE = 18;
             public const int POS_ACNO = 0;
-            public const int NUMCOLS = 69;
+            public const int NUMCOLS = 74; //also supporting old format 69 cols
         }
         public struct DSBELOW10KW
         {
@@ -85,7 +85,7 @@ public class common
             public const int POS_BILLYEAR = 55;
             public const int POS_BILLCYCLE = 18;
             public const int POS_ACNO = 0;
-            public const int NUMCOLS = 72;
+            public const int NUMCOLS = 79; //also supporting old format 72 cols
         }
         public struct DSABOVE10KW
         {
@@ -99,7 +99,7 @@ public class common
             public const int POS_BILLYEAR = 55;
             public const int POS_BILLCYCLE = 18;
             public const int POS_ACNO = 0;
-            public const int NUMCOLS = 76;
+            public const int NUMCOLS = 83; //also supporting old format 76 cols
         }
         public struct SAP_SBM_GSC
         {
