@@ -442,6 +442,16 @@ public partial class upload : System.Web.UI.Page
             return;
         }
     }
+    void ShowLastUploads()
+    {
+        string userID = Session["userID"].ToString();
+        string sql = string.Empty;
+
+        sql = String.Format("select rownum as \"#\", a.* from (select categ,insrec as ins,duprec as dup,errrec as err,to_char(dated,'hh:mi pm') time "+
+                    "from USERREC where userid = '{0}' and to_char(dated,'yyyymmdd') = to_char(sysdate, 'yyyymmdd') "+
+                    "order by dated) a", userID);
+        OraDBConnection.FillGrid(ref gvLastUploads, sql);
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!common.isValidSession(Page.Session))
@@ -453,6 +463,7 @@ public partial class upload : System.Web.UI.Page
         {
             common.FillInfo(Page.Session, lblLoggedInAs);
         }
+        ShowLastUploads();
     }
     protected void btnUpload_Click(object sender, EventArgs e)
     {

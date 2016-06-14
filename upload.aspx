@@ -19,47 +19,59 @@
 	</div>
     <nav id="pageNav"></nav>
     <header class="sectionHeader">Upload Billing Data</header>
-    <form runat="server" class="tableWrapper">
-        <div class="tableRow">
-            <p></p>
-            <p>
-                <input type="radio" id="idBillClass1" class="billClass" name="billClass" value="sap" checked>SAP
-                <input type="radio" id="idBillClass2" class="billClass" name="billClass" value="nonsap">Non-SAP
-            </p>
-        </div>
-        <div class="tableRow">
-            <p> <label for="drpBillType">Bill Type</label></p>
-            <p id="ddlHere">
-                <select ID='drpBillType' runat='server'>
-                    <option Value='BT'>Bill Type</option>
-                </select>
-            </p>
-        </div>
-        <div class="tableRow">
-            <p><label for="FileUpload1">Select Bill File</label></p>
-		    <p><asp:FileUpload ID="FileUpload1" runat="server"/></p>
-        </div>
-        <div class="tableRow">
-            <p></p>
-            <p><asp:Button ID="btnUpload" runat="server" onclick="btnUpload_Click" 
-                        Text="Upload Bill" required/>
-            </p>
-        </div>
-        <div class="tableRow">
-            <p></p>
-            <p>
-                <span class="msg"><asp:Label ID="lblMessage" runat="server" class="msg"></asp:Label></span>
-            </p>
-        </div>
-        <div class="tableRow">
-            <p></p>
-            <p>
-                <asp:Button ID="btnExport" runat="server" onclick="btnExport_Click" 
-                        Text="Error Details" Visible="False" />
-                <asp:HiddenField ID="hidSID" runat="server" />
-                <asp:HiddenField ID="hidBillType" runat="server" />
-                <asp:HiddenField ID="hidBillClass" runat="server" />
-            </p>
+    <form runat="server" >
+        <div id="wrapper">
+            <div class="tableWrapper">
+                <div class="tableRow">
+                    <p></p>
+                    <p>
+                        <input type="radio" id="idBillClass1" class="billClass" name="billClass" value="sap" checked>SAP
+                        <input type="radio" id="idBillClass2" class="billClass" name="billClass" value="nonsap">Non-SAP
+                    </p>
+                </div>
+                <div class="tableRow">
+                    <p> <label for="drpBillType">Bill Type</label></p>
+                    <p id="ddlHere">
+                        <select ID='drpBillType' runat='server'>
+                            <option Value='BT'>Bill Type</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="tableRow">
+                    <p><label for="FileUpload1">Select Bill File</label></p>
+		            <p><asp:FileUpload ID="FileUpload1" runat="server"/></p>
+                </div>
+                <div class="tableRow">
+                    <p></p>
+                    <p><asp:Button ID="btnUpload" runat="server" onclick="btnUpload_Click" 
+                                Text="Upload Bill" required/>
+                    </p>
+                </div>
+                <div class="tableRow">
+                    <p></p>
+                    <p>
+                        <span class="msg"><asp:Label ID="lblMessage" runat="server" class="msg"></asp:Label></span>
+                    </p>
+                </div>
+                <div class="tableRow">
+                    <p></p>
+                    <p>
+                        <asp:Button ID="btnExport" runat="server" onclick="btnExport_Click" 
+                                Text="Error Details" Visible="False" />
+                        <asp:HiddenField ID="hidSID" runat="server" />
+                        <asp:HiddenField ID="hidBillType" runat="server" />
+                        <asp:HiddenField ID="hidBillClass" runat="server" />
+                    </p>
+                </div>
+            </div>
+            <%--<p id="grid_msg">Today's Uploads</p>--%>
+            <header class="subSectionHeader">Today's Uploads</header>
+            <div id="grid" class="tableWrapper">
+                <div id="div_trgrid" class="tableRow">
+                    <asp:GridView ID="gvLastUploads" runat="server" Width="100%">
+                    </asp:GridView>
+                </div>
+            </div>
         </div>
     </form>
     <footer id="pageFooter" class="pageFooter">	</footer>
