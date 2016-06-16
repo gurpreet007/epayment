@@ -8,7 +8,7 @@
     <!--[if lt IE 9]>
         <script src="scripts/html5shiv.min.js"></script>        
    <![endif]-->
-	<%--<link rel="stylesheet" href="styles/epayment.css">--%>
+    <%--<link rel="stylesheet" href="styles/epayment.css">--%>
     <link rel="stylesheet/less" href="styles/epayment.less" type="text/css" />
     <script src="scripts/less.min.js"></script>
 </head>
@@ -68,7 +68,21 @@
             <header class="subSectionHeader">Today's Uploads</header>
             <div id="grid" class="tableWrapper">
                 <div id="div_trgrid" class="tableRow">
-                    <asp:GridView ID="gvLastUploads" runat="server" Width="100%">
+                    <asp:GridView ID="gvLastUploads" runat="server" Width="100%" 
+                        AutoGenerateColumns="False">
+                        <Columns>
+                            <asp:BoundField DataField="#" HeaderText="#" />
+                            <asp:BoundField DataField="categ" HeaderText="Categ" />
+                            <asp:BoundField DataField="ins" HeaderText="Ins" />
+                            <asp:BoundField DataField="dup" HeaderText="Dup" />
+                            <asp:BoundField DataField="err" HeaderText="Err" />
+                            <asp:BoundField DataField="time" HeaderText="Time" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lnkDownload" runat="server" onclick="lnkDownload_Click">Download</asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
                     </asp:GridView>
                 </div>
             </div>

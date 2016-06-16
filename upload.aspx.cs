@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Oracle.DataAccess.Client;
+using System.Data;
+
 public partial class upload : System.Web.UI.Page
 {
     void UploadNonSAP(common.Categs categ)
@@ -446,11 +448,13 @@ public partial class upload : System.Web.UI.Page
     {
         string userID = Session["userID"].ToString();
         string sql = string.Empty;
-
-        sql = String.Format("select rownum as \"#\", a.* from (select categ,insrec as ins,duprec as dup,errrec as err,to_char(dated,'hh:mi pm') time "+
+        DataSet ds;
+        sql = String.Format("select rownum as \"#\", a.* from (select categ,insrec as ins,duprec as dup,errrec as err,to_char(dated,'hh:mi:ss pm') time "+
                     "from USERREC where userid = '{0}' and to_char(dated,'yyyymmdd') = to_char(sysdate, 'yyyymmdd') "+
                     "order by dated) a", userID);
-        OraDBConnection.FillGrid(ref gvLastUploads, sql);
+        ds = OraDBConnection.GetData(sql);
+        gvLastUploads.DataSource = ds.Tables[0];
+        gvLastUploads.DataBind();
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -521,6 +525,7 @@ public partial class upload : System.Web.UI.Page
             lblMessage.Text = "Some error occurred. Try after sometime.";
             return;
         }
+        ShowLastUploads();
     }
     protected void btnExport_Click(object sender, EventArgs e)
     {
@@ -531,5 +536,15 @@ public partial class upload : System.Web.UI.Page
         strFileName = "not_entered_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
 
         common.DownloadXLS(sql, strFileName, this);
+    }
+    protected void lnkDownload_Click(object sender, EventArgs e)
+    {
+        string categ = ((System.Web.UI.WebControls.TableRow)(((LinkButton)sender).Parent.Parent)).Cells[1].Text;
+        string time = ((System.Web.UI.WebControls.TableRow)(((LinkButton)sender).Parent.Parent)).Cells[5].Text;
+        string userID = Session["userID"].ToString();
+        string sql = string.Empty;
+        string datetime = System.DateTime.Now.ToString("yyyyMMdd ") + time;
+        sql = string.Format("select * from {0} where userid='{1}' and to_char(DTUPLOAD,'yyyymmdd hh:mi:ss pm') = '{2}'", categ, userID, datetime);
+        common.DownloadXLS(sql, "Details.xls", this);
     }
 }
