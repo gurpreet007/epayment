@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="activity_log.aspx.cs" Inherits="reports" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="delayed.aspx.cs" Inherits="reports" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,17 +19,16 @@
         <asp:Label ID="lblLoggedInAs" runat="server"></asp:Label> 
 	</div>
     <nav id="pageNav"></nav>
-    <header class="sectionHeader">Activity Log</header>
-    <asp:Panel class="reportPanel" ID="panActivity" runat="server" Visible="True">
+    <header class="sectionHeader">Delayed Log</header>
+    <asp:Panel class="reportPanel" ID="panDelayed" runat="server" Visible="True">
         <form id="form1" runat="server" class="tableWrapper">
             <div class="tableRow">
-                <p><label for="panActivity_drpUsers">User</label></p>
-                <p><asp:DropDownList ID="panActivity_drpUsers" runat="server" autofocus></asp:DropDownList></p>
+                <p><label for="panDelayed_drpUsers">User</label></p>
+                <p><asp:DropDownList ID="panDelayed_drpUsers" runat="server" autofocus></asp:DropDownList></p>
             </div>
             <div class="tableRow">
-                <p><label for="panActivity_drpBillType">Bill Type</label></p>
-                <p><asp:DropDownList ID="panActivity_drpBillType" runat="server">
-                    <asp:ListItem Value="ALL">All Bill Types</asp:ListItem>
+                <p><label for="panDelayed_drpBillType">Bill Type</label></p>
+                <p><asp:DropDownList ID="panDelayed_drpBillType" runat="server">
                     <asp:ListItem Value="DSBELOW10KW">NONSAP - DSBELOW10KW (Spot Billing)</asp:ListItem>
                     <asp:ListItem Value="LS">NONSAP - LS</asp:ListItem>
                     <asp:ListItem Value="SP">NONSAP - SP</asp:ListItem>
@@ -40,40 +39,32 @@
                     </asp:DropDownList></p>
             </div>
             <div class="tableRow">
-                <p><label for="panActivity_drpDuration">Duration</label></p>
-                <p><asp:DropDownList ID="panActivity_drpDuration" runat="server">
-                    <asp:ListItem Value="day1">Today</asp:ListItem>
-                    <asp:ListItem Value="day2">2 Days</asp:ListItem>
-                    <asp:ListItem Value="day3">3 Days</asp:ListItem>
-                    <asp:ListItem Value="week">Week</asp:ListItem>
-                    <asp:ListItem Value="month">Month</asp:ListItem>
-                    <asp:ListItem Value="year">Year</asp:ListItem>
-                    <asp:ListItem Value="dates">Enter Dates</asp:ListItem>
+                <p><label for="panDelayed_drpDelayedType">Delayed Type</label></p>
+                <p><asp:DropDownList ID="panDelayed_drpDelayedType" runat="server">
+                    <asp:ListItem Value="AfterDueDate">Uploaded after Due Date</asp:ListItem>
+                    <asp:ListItem Value="MRD_Days">Upload after MRD + ... Days</asp:ListItem>
+                    <asp:ListItem Value="UploadedAfter">Uploaded after ... Date</asp:ListItem>
                     </asp:DropDownList></p>
             </div> 
             <div class="tableRow exactDate">
-                <p style="vertical-align:middle"><label for="sDate">Start Date</label></p>
+                <p style="vertical-align:middle"><label for="sDate">Enter Date</label></p>
                 <p><input type="text" runat="server" id="sDate" class="dtclass" placeholder="DD-Mon-YYYY" maxlength="11"/></p>
             </div> 
-            <div class="tableRow exactDate">
-                <p style="vertical-align:middle"><label for="eDate">End Date</label></p>
-                <p><input type="text" runat="server" id="eDate" class="dtclass" placeholder="DD-Mon-YYYY" maxlength="11"/></p>
+            <div class="tableRow mrddays">
+                <p style="vertical-align:middle"><label for="numDays">Enter Days</label></p>
+                <p><input type="text" runat="server" id="numDays" class="numclass" maxlength="3" value="5" min="1" max="100"/></p>
             </div>
             <div class="tableRow">
                 <p></p>
-                <p><asp:Label ID="panActivity_lblMsg" class="msg" runat="server"></asp:Label></p>
+                <p><asp:Label ID="panDelayed_lblMsg" class="msg" runat="server"></asp:Label></p>
             </div>
             <div class="tableRow">
                 <p></p>
-                <p><asp:Button ID="panActivity_btnShowCount" Text="Show Count" runat="server" onclick="btnShowCount_Click" /></p>
+                <p><asp:Button ID="panDelayed_btnShowCount" Text="Show Count" runat="server" onclick="btnShowCount_Click" /></p>
             </div>
             <div class="tableRow">
                 <p></p>
-                <p><asp:Button ID="panActivity_btnShowActivity" Text="Activity Log" runat="server" onclick="btnUserActivity_Click" /></p>
-            </div>
-            <div class="tableRow">
-                <p></p>
-                <p><asp:Button ID="panActivity_btnShowIndvRecs" Text="Bill Details" runat="server" onclick="btnShowIndvRecs_Click" /></p>
+                <p><asp:Button ID="panDelayed_btnShowIndvRecs" Text="Bill Details" runat="server" onclick="btnShowIndvRecs_Click" /></p>
             </div>
         </form>
     </asp:Panel>
@@ -87,10 +78,10 @@
             $("#pageHeader").load("resources/snippets.html #snipPageHeader");
             $("#pageNav").load("resources/snippets.html #snipPageNav", function () {
                 $("#pageNav li").removeClass("selected");
-                $("#pageNav #nvActivityLog").addClass("selected");
+                $("#pageNav #nvDelayed").addClass("selected");
                 $("#pageNav").hover(
                     function () { $("#pageNav li").removeClass("selected"); },
-                    function () { $("#pageNav #nvActivityLog").addClass("selected"); }
+                    function () { $("#pageNav #nvDelayed").addClass("selected"); }
                 );
             });
             $("#pageFooter").load("resources/snippets.html #snipPageFooter");
@@ -100,27 +91,48 @@
             if ($("#sDate").val() == "") {
                 $("#sDate").val(curdate);
             }
-            if ($("#eDate").val() == "") {
-                $("#eDate").val(curdate);
-            }
 
             $(".exactDate").removeClass("tableRow");
             $(".exactDate").addClass("hide");
-            function exactDates()
-            {
-                var drpDur = $("#panActivity_drpDuration option:selected").val();
-                if (drpDur == "dates") {
+            $(".mrddays").removeClass("tableRow");
+            $(".mrddays").addClass("hide");
+            function exactDates() {
+                var drpDur = $("#panDelayed_drpDelayedType option:selected").val();
+                if (drpDur == "UploadedAfter") {
                     $(".exactDate").removeClass("hide");
                     $(".exactDate").addClass("tableRow");
+                    $(".mrddays").removeClass("tableRow");
+                    $(".mrddays").addClass("hide");
+                }
+                else if (drpDur == "MRD_Days") {
+                    $(".mrddays").removeClass("hide");
+                    $(".mrddays").addClass("tableRow");
+                    $(".exactDate").removeClass("tableRow");
+                    $(".exactDate").addClass("hide");
+                    var billType = $("#panDelayed_drpBillType option:selected").val();
+                    if ($("#panDelayed_lblMsg").text() == "") {
+                        if (billType == "SAP_SBM_GSC" || billType == "SAP_SBM_READING") {
+                            $("#panDelayed_lblMsg").text("Using Cur_Meter_Reading_Date");
+                        }
+                        else {
+                            $("#panDelayed_lblMsg").text("Using IssueDate");
+                        }
+                    }
                 }
                 else {
                     $(".exactDate").removeClass("tableRow");
                     $(".exactDate").addClass("hide");
+                    $(".mrddays").removeClass("tableRow");
+                    $(".mrddays").addClass("hide");
                 }
             }
             $(".dtclass").datepicker({ dateFormat: "dd-M-yy", changeMonth: "true", changeYear: "true", maxDate: 0, showMonthAfterYear: "true" });
-            exactDates();//needed incase of FF refresh while Exact Date is selected in drpdown
-            $("#panActivity_drpDuration").change(exactDates);
+
+            //needed incase of FF refresh while Exact Date is selected in drpdown
+            exactDates();
+
+            //change event of dropdown
+            $("#panDelayed_drpDelayedType").change(exactDates);
         });
     </script>
 </body>

@@ -128,9 +128,6 @@
             $(".dtclass").datepicker({ dateFormat: "dd-M-yy", changeMonth: "true", changeYear: "true", maxDate: 0, showMonthAfterYear: "true" });
             exactDates(); //needed incase of FF refresh while Exact Date is selected in drpdown
             $("#panActivity_drpDuration").change(exactDates);
-            $("#panActivity_btnAddUser").click(function () {
-                $("#panActivity_lblMsg").html("");
-            })
         });
     </script>
 </body>
