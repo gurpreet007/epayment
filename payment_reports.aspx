@@ -75,6 +75,12 @@
                 <p style="vertical-align:middle"><label for="eDate">End Date</label></p>
                 <p><input type="text" runat="server" id="eDate" class="dtclass" placeholder="DD-Mon-YYYY" maxlength="11"/></p>
             </div>
+            
+            <div class="tableRow">
+                <p></p>
+                <p><asp:CheckBox ID="chkCombined" class="tableRow" runat="server" Text="Combined" 
+                        Visible="False"></asp:Checkbox></p>
+            </div>
             <div class="tableRow">
                 <p></p>
                 <p><asp:Label ID="lblMsg" class="msg" runat="server"></asp:Label></p>
