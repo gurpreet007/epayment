@@ -81,6 +81,7 @@ public partial class index : System.Web.UI.Page
             "from onlinebill.sap_sbm_gsc where userid='{0}') dsbSapDt " +
             "from dual", userID, empID
             );
+        return null;
         ds = OraDBConnection.GetData(sql);
         arrCounts[0] = ds.Tables[0].Rows[0]["lsDt"].ToString();
         arrCounts[1] = ds.Tables[0].Rows[0]["msDt"].ToString();

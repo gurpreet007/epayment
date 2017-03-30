@@ -23,8 +23,19 @@
     <asp:Panel class="reportPanel" ID="panActivity" runat="server" Visible="True">
         <form id="form1" runat="server" class="tableWrapper">
             <div class="tableRow">
+                <p><label for="panActivity_drpSearchBy">Search By</label></p>
+                <p><asp:DropDownList ID="panActivity_drpSearchBy" runat="server">
+                    <asp:ListItem Value="user">User</asp:ListItem>
+                    <asp:ListItem Value="loc">Location</asp:ListItem>
+                    </asp:DropDownList></p>
+            </div>
+            <div class="tableRow searchUser">
                 <p><label for="panActivity_drpUsers">User</label></p>
                 <p><asp:DropDownList ID="panActivity_drpUsers" runat="server" autofocus></asp:DropDownList></p>
+            </div>
+            <div class="tableRow searchLoc">
+                <p style="vertical-align:middle"><label for="txtLoc">Location</label></p>
+                <p style="margin-left:0px; padding-left:0px;"><input type="text" runat="server" id="panActivity_txtLoc" maxlength="4" placeholder="e.g. U11, 1234"/></p>
             </div>
             <div class="tableRow">
                 <p><label for="panActivity_drpBillType">Bill Type</label></p>
@@ -106,8 +117,13 @@
 
             $(".exactDate").removeClass("tableRow");
             $(".exactDate").addClass("hide");
-            function exactDates()
-            {
+
+//            $(".searchUser").addClass("tableRow");
+//            $(".searchUser").removeClass("hide");
+//            $(".searchLoc").addClass("hide");
+//            $(".searchLoc").removeClass("tableRow");
+            searchBy();
+            function exactDates() {
                 var drpDur = $("#panActivity_drpDuration option:selected").val();
                 if (drpDur == "dates") {
                     $(".exactDate").removeClass("hide");
@@ -118,9 +134,25 @@
                     $(".exactDate").addClass("hide");
                 }
             }
+            function searchBy() {
+                var drpSearchByVal = $("#panActivity_drpSearchBy option:selected").val();
+                if (drpSearchByVal == "user") {
+                    $(".searchUser").addClass("tableRow");
+                    $(".searchUser").removeClass("hide");
+                    $(".searchLoc").addClass("hide");
+                    $(".searchLoc").removeClass("tableRow");
+                }
+                else if (drpSearchByVal == "loc") {
+                    $(".searchUser").addClass("hide");
+                    $(".searchUser").removeClass("tableRow");
+                    $(".searchLoc").addClass("tableRow");
+                    $(".searchLoc").removeClass("hide");
+                }
+            }
             $(".dtclass").datepicker({ dateFormat: "dd-M-yy", changeMonth: "true", changeYear: "true", maxDate: 0, showMonthAfterYear: "true" });
-            exactDates();//needed incase of FF refresh while Exact Date is selected in drpdown
+            exactDates(); //needed incase of FF refresh while Exact Date is selected in drpdown
             $("#panActivity_drpDuration").change(exactDates);
+            $("#panActivity_drpSearchBy").change(searchBy);
         });
     </script>
 </body>
